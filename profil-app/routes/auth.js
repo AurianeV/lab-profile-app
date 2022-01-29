@@ -156,11 +156,10 @@ router.post("/edit/:id", isLoggedIn, (req, res) => {
   const { username, campus, course } = req.body;
   const userid = req.params.id;
   
-  User.findByIdAndUpdate(
-    {_id:userid}, {username, campus, course})
+  User.findByIdAndUpdate({_id:userid}, {username, campus, course})
       .then((user) => {
       return res.json(user);
-
+      })
  .catch((err) => {
   return res.status(500).json({ errorMessage: error.message });
  
@@ -168,7 +167,6 @@ router.post("/edit/:id", isLoggedIn, (req, res) => {
 
   });
   
-  });
 
 
 module.exports = router;
