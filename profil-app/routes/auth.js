@@ -19,7 +19,7 @@ router.get("/loggedin", (req, res) => {
 });
 
 router.post("/signup", isLoggedOut, (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, campus, course } = req.body;
 
   if (!username) {
     return res
@@ -31,6 +31,22 @@ router.post("/signup", isLoggedOut, (req, res) => {
     return res.status(400).json({
       errorMessage: "Your password needs to be at least 8 characters long.",
     });
+
+  }
+
+  if(!campus) {
+    return res
+    .status(400)
+    .json({ errorMessage: "Your campus doesn't exist."});
+  }    
+
+  {
+  if(!course) {
+    return res
+    .status(400)
+    .json({ erroMessage :"Your course doesn't exist."});
+  }
+
   }
 
   //   ! This use case is using a regular expression to control for special characters and min length
@@ -135,5 +151,24 @@ router.get("/logout", isLoggedIn, (req, res) => {
     res.json({ message: "Done" });
   });
 });
+
+router.post("/edit/:id", isLoggedIn, (req, res) => {
+  const { username, campus, course } = req.body;
+  const userid = req.params.id;
+  
+  User.findByIdAndUpdate(
+    {_id:userid}, {username, campus, course})
+      .then((user) => {
+      return res.json(user);
+
+ .catch((err) => {
+  return res.status(500).json({ errorMessage: error.message });
+ 
+  });
+
+  });
+  
+  });
+
 
 module.exports = router;

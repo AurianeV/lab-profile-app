@@ -12,7 +12,22 @@ const userSchema = new Schema(
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
+  },
+
+  { 
+    campus: [{ type: String, enum: ["Madrid", "Barcelona", "Miami", "Paris", "Berlin", "Amsterdam", "México", "Sao Paulo", "Lisbon",] }], 
+  },
+
+  {
+  course: [{ type: String, enum: ["Web Dev", "UX/UI", "Data Analytics"] }],
+  },
+
+  {
+    image: {
+      type: String,
+    }
   }
+
 );
 
 const User = model("User", userSchema);
